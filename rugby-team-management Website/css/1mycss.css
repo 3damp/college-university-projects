@@ -1,0 +1,152 @@
+
+.container{
+  /*padding: 0px;
+  /*margin-bottom: 0px;*/
+  /*color: white;*/
+}
+body{
+  /*background: #444444;*/
+  padding-top: 51px;
+}
+
+
+/*
+.panel-default {
+  border-color: #111;
+}
+.panel-default > .panel-heading {
+  color: #888;
+  background-color: #333;
+  border-color: #111;
+}
+.panel {
+  border-color: #111;
+  background-color: #888;
+}
+*/
+
+@media (min-width: 368px){
+  #logincontainer{
+    width: 20em;
+  }
+}
+
+.darkbtn{
+  border: 0px;
+  background-color: #444;
+  color: white;
+}
+.darkbtn:hover,.darkbtn:focus,.darkbtn:active{
+  border: 0px;
+  background-color: #aaa !important;
+  color: white;
+  outline: 0px auto -webkit-focus-ring-color !important;
+}
+
+.listbtn{
+  color: black;
+
+}
+.listbtn:hover{
+  color: black;
+  background-color: #ccc;
+  text-decoration: none;
+
+}
+
+
+.listbtn-panel{
+  margin-bottom: -1px;
+  
+}
+.navbar-inverse .navbar-brand {
+    color: white;
+    font-size: 170%;
+}
+
+
+/*#####################################*/
+
+#wrapper {
+    padding-left: 0;
+}
+
+#page-wrapper {
+    min-width: 100%;
+    padding: 0;
+    background-color: white;
+    height: 100%;
+}
+
+@media(min-width:768px) {
+    #wrapper {
+        padding-left: 225px;
+    }
+
+    #page-wrapper {
+        padding: 10px;
+    }
+}
+
+/* NAVIGATION COLORS */
+.navbar-inverse .navbar-nav>.active>a, .navbar-inverse .navbar-nav>.active>a:focus, .navbar-inverse .navbar-nav>.active>a:hover {
+  color: #fff!important;
+  background-color: #999!important;
+}
+
+.navbar-inverse .navbar-nav>.sub-menu>a, .navbar-inverse .navbar-nav>.sub-menu>a:focus, .navbar-inverse .navbar-nav>.sub-menu>a:hover {
+  color: #fff!important;
+  background-color: #333!important;
+  display: block;
+  padding-left: 38px;
+}
+
+/* NAVIGATION */
+@media(min-width:768px) {
+    .side-nav {
+        position: fixed;
+        top: 51px;
+        left: 225px;
+        width: 225px;
+        margin-left: -225px;
+        border: none;
+        border-radius: 0;
+        overflow-y: auto;
+        background-color: #222;
+        bottom: 0;
+        overflow-x: hidden;
+        padding-bottom: 40px;
+    }
+
+    .side-nav>li>a {
+        width: 225px;
+    }
+
+    .side-nav li a:hover,
+    .side-nav li a:focus {
+        outline: none;
+        color: #bbb !important;
+        background-color: #111!important;
+    }
+}
+
+.side-nav>li>ul {
+    padding: 0;
+}
+
+.side-nav>li>ul>li>a {
+    display: block;
+    padding: 10px 15px 10px 38px;
+    text-decoration: none;
+    color: #999;
+}
+
+.side-nav>li>ul>li>a:hover {
+    color: #fff;
+}
+
+
+
+
+
+

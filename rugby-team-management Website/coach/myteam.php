@@ -1,0 +1,116 @@
+<?php
+require_once("../php/db.php");
+require_once("../php/userTypeChecker.php");
+session_start();
+
+if(!isset($_SESSION["user_name"])){
+    echo "<script language=\"JavaScript\">\n";
+    echo "window.location='../signin.php'";
+    echo "</script>";
+    exit();
+    
+}else{ //CHECK USER TYPE
+    $active_username = $_SESSION["user_name"];
+    $dir = basename(__DIR__);
+    checkType($active_username,$dir);
+
+    //retrieve name from database
+    $sql = "SELECT * FROM users WHERE username = '$active_username' LIMIT 1";
+    $result = mysqli_query($con, $sql);
+    $result_array = mysqli_fetch_array($result);
+
+    $name = $result_array['name'];
+}
+
+?>
+<html lang="en">
+<head>
+    <meta name="generator" content="HTML Tidy for HTML5 (experimental) for Windows https://github.com/w3c/tidy-html5/tree/c63cc39" />
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+
+    <link rel="icon" href="../../favicon.ico" />
+    <title>SimplyRugby</title>
+    <!-- Bootstrap core CSS -->
+    <link href="../css/bootstrap.min.css" rel="stylesheet" />
+    <!-- Custom styles -->
+    <link href="../css/mycss.css" rel="stylesheet" />
+</head>
+
+<body>
+    <div id="wrapper">
+    <?php require_once("navbar.php");?>
+        <div id="page-wrapper">
+            <!-- .container-fluid -->
+            <div class="container-fluid"> <!-- ============ PAGE CONTENT ============= -->
+                
+                <?php
+                    //Save team id to session to keep editing
+                    $usql = mysqli_query($con,"SELECT * FROM users WHERE username = '$active_username'");
+                    $u_result = mysqli_fetch_array($usql);
+                    $active_id = $u_result['id'];
+
+                    $tsql = mysqli_query($con,"SELECT * FROM teams WHERE coach_id = '$active_id'");
+                    $team_result = mysqli_fetch_array($tsql);
+
+                    if($team_result == null){
+                        echo '
+                            <h1>You don\'t have a team</h1>
+                        ';
+                        exit();
+                    }
+
+                    $team_id = $team_result['team_id'];
+
+                ?>
+
+
+
+                <h1><?=$team_result['name']?></h1>
+                <?php
+                    // if player is meant to be added
+                    if (isset($_GET['addid'])) {
+                        $add_id = $_GET['addid'];
+
+                        // ADD player to team
+                        $addPlayerSql = mysqli_query($con,"UPDATE players SET team_id = '$team_id' WHERE member_id = '$add_id' LIMIT 1");
+
+                    }else if(isset($_GET['removeid'])){
+                        $remove_id = $_GET['removeid'];
+                        // REMOVE player from team
+                        $removePlayerSql = mysqli_query($con,"UPDATE players SET team_id = NULL WHERE member_id = '$remove_id' LIMIT 1");
+                    }
+                
+
+                    $psql = mysqli_query($con,"SELECT * FROM players WHERE team_id = '$team_id'");
+
+                    //Print all players in the team
+                    while ($players_result = mysqli_fetch_array($psql)) {
+                        $mem_id = $players_result['member_id'];
+                        $usql = mysqli_query($con,"SELECT * FROM users WHERE id = '$mem_id'");
+                        $user_result = mysqli_fetch_array($usql);
+                        echo '
+                            <div class="panel panel-default listbtn-panel">
+                                <a class="listbtn" href="playerpage.php?userid='.$user_result['id'].'"><div class="panel-body listbtn">'.$user_result['name'].' '.$user_result['surname'].'</div></a>
+                            </div>
+
+                        ';
+                    }
+                ?>
+                
+
+
+            </div> <!-- ================ /PAGE CONTENT ================ -->
+            <!-- /.container-fluid -->
+        </div>
+        <!-- /#page-wrapper -->
+    </div>
+    <!-- /#wrapper -->
+
+    <!-- JAVASCRIPT IMPORT-->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script> 
+    <script src="../js/bootstrap.min.js"></script>
+
+</body>
+</html>
